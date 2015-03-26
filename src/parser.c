@@ -10,3 +10,7 @@ char const* nextToken(char const* input) {
   for (; *input && isspace(*input); input++) {}
   return input;
 }
+
+void parserInit() {}
+void parseString(char const* input) {}
+void parserFree() {}
