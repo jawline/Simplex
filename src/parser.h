@@ -10,5 +10,9 @@
  * Constraint: Expression '=' Expression
  * Expression: (ID | NUM | NUM ID) [('+' | '-') Expression]
  */
+ 
+ void parserInit();
+ void parseString(char const* input);
+ void parserFree();
 
 #endif //_SIMPLEX_PARSER_DEF_H_
