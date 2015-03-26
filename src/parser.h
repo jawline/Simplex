@@ -11,7 +11,16 @@
  * Expression: (ID | NUM | NUM ID) [('+' | '-') Expression]
  */
  
- typedef enum { MAX = 0, ID, NUM, NEWLINE, ST, EQ, PLUS, MINUS } TOKEN;
+typedef enum {
+ MAX = 0,
+ ID,
+ NUM,
+ NEWLINE,
+ ST,
+ EQ,
+ PLUS,
+ MINUS
+} TOKEN;
  
  void parserInit();
  void parseString(char const* input);
