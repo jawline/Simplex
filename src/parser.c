@@ -32,6 +32,9 @@ char const* nextToken(TOKEN* token, char const* input) {
   } else if (*input == '-') {
     *token = MINUS;
     return input + 1;
+  } else if (*input == '\0') {
+    *token = EOF;
+    return input;
   }
   
   printf("Could not parse valid token from %s\n", input);
@@ -42,6 +45,10 @@ char const* nextToken(TOKEN* token, char const* input) {
 void parserInit() {}
 
 char const* parseExpression(char const* input) {
+  return input;
+}
+
+char const* parseConstraint(char const* input) {
   return input;
 }
 
@@ -70,10 +77,14 @@ bool parseString(char const* input) {
     return false;
   }
   
-  if (nextToken != ST) {
+  if (nextToken == EOF) {
+    return true;
+  } else if (nextToken != ST) {
     printf("Expected 's.t.' to be the next token near %s\n", input);
     return false;
   }
+  
+  return parseConstraints(input) != 0;
 }
 
 void parserFree() {}
