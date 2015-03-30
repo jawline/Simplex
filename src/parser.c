@@ -76,6 +76,10 @@ char const* parseConstraint(char const* input) {
   return input;
 }
 
+char const* parseConstraints(char const* input) {
+  return input;
+}
+
 bool parseString(char const* input) {
   TOKEN nextToken;
   input = nextToken(&nextToken, input);
