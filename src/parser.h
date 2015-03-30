@@ -5,8 +5,8 @@
  * ID = \[a-zA-Z]+[0-9]*\
  * NUM = \[0-9]+(.[0-9]+)?\
  * Grammar:
- * MinMax: max Expression NEWLINE ['s.t.' Constraints]
- * Constraints: Constraint [NEWLINE Constraints]
+ * MinMax: max Expression ['s.t.' Constraints]
+ * Constraints: Constraint [Constraints]
  * Constraint: Expression '=' Expression
  * Expression: (ID | NUM | NUM ID) [('+' | '-') Expression]
  */
@@ -15,7 +15,6 @@ typedef enum {
  MAX = 0,
  ID,
  NUM,
- NEWLINE,
  ST,
  EQ,
  PLUS,
