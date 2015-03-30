@@ -19,7 +19,8 @@ typedef enum {
  ST,
  EQ,
  PLUS,
- MINUS
+ MINUS,
+ EOF
 } TOKEN;
  
  void parserInit();
