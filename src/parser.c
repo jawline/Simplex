@@ -47,20 +47,31 @@ char const* parseExpression(char const* input) {
 
 bool parseString(char const* input) {
   TOKEN nextToken;
-  input = nextToken(&token, input);
+  input = nextToken(&nextToken, input);
   
   if (!input) {
     return false;
   }
 
   if (nextToken != MAX) {
-    printf("Expected max to be the next token at %s\n", input);
+    printf("Expected max to be the next token near %s\n", input);
     return false;
   }
   
   input = parseExpression(input);
   
   if (!input) {
+    return false;
+  }
+  
+  input = nextToken(&nextToken, input);
+  
+  if (!input) {
+    return false;
+  }
+  
+  if (nextToken != ST) {
+    printf("Expected 's.t.' to be the next token near %s\n", input);
     return false;
   }
 }
