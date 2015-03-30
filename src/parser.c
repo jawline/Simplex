@@ -45,17 +45,17 @@ char const* nextToken(TOKEN* token, char const* input) {
 void parserInit() {}
 
 char const* parseExpression(char const* input) {
-  TOKEN nextToken;
+  TOKEN token;
   
-  input = nextToken(&nextToken, input);
+  input = nextToken(&token, input);
   if (!input) {
     return 0;
   }
   
-  if (nextToken == ID) {
+  if (token == ID) {
     printf("Handle ID\n");
-  } else if (nextToken == NUM) {
-    if (nextToken(&nextToken, input) && nextToken == ID) {
+  } else if (token == NUM) {
+    if (nextToken(&token, input) && token == ID) {
       printf("NUM * ID\n");
     } else {
       printf("NUM\n");
@@ -65,7 +65,7 @@ char const* parseExpression(char const* input) {
     return 0;
   }
   
-  if (nextToken(&nextToken, input) && (nextToken == PLUS || nextToken == MINUS)) {
+  if (nextToken(&token, input) && (token == PLUS || token == MINUS)) {
     return parseExpression(input);
   } else {
     return input;
@@ -77,18 +77,29 @@ char const* parseConstraint(char const* input) {
 }
 
 char const* parseConstraints(char const* input) {
-  return input;
+  
+  input = parseConstraint(input);
+  
+  if (!input) {
+    return 0;
+  }
+  
+  if (nextToken(&token, input) && nextToken == EOF) {
+    return input;
+  } else {
+    return parseConstraints(char const* input);
+  }
 }
 
 bool parseString(char const* input) {
-  TOKEN nextToken;
-  input = nextToken(&nextToken, input);
+  TOKEN token;
+  input = nextToken(&token, input);
   
   if (!input) {
     return false;
   }
 
-  if (nextToken != MAX) {
+  if (token != MAX) {
     printf("Expected max to be the next token near %s\n", input);
     return false;
   }
@@ -99,15 +110,15 @@ bool parseString(char const* input) {
     return false;
   }
   
-  input = nextToken(&nextToken, input);
+  input = nextToken(&token, input);
   
   if (!input) {
     return false;
   }
   
-  if (nextToken == EOF) {
+  if (token == EOF) {
     return true;
-  } else if (nextToken != ST) {
+  } else if (token != ST) {
     printf("Expected 's.t.' to be the next token near %s\n", input);
     return false;
   }
