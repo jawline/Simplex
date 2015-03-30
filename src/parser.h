@@ -2,7 +2,7 @@
 #define _SIMPLEX_PARSER_DEF_H_
 
 /**
- * ID = \[a-zA-Z]+[0-9]*\
+ * ID = \[a-zA-Z][a-zA-Z0-9]*\
  * NUM = \[0-9]+(.[0-9]+)?\
  * Grammar:
  * MinMax: max Expression ['s.t.' Constraints]
