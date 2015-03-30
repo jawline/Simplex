@@ -117,6 +117,7 @@ char const* parseConstraints(char const* input) {
   }
   
   if (nextToken(&token, input) && nextToken == EOF) {
+    printf("Parsed Constraints\n");
     return input;
   } else {
     return parseConstraints(char const* input);
