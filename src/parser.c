@@ -53,15 +53,23 @@ char const* parseExpression(char const* input) {
   }
   
   if (nextToken == ID) {
-    
+    printf("Handle ID\n");
   } else if (nextToken == NUM) {
-    
+    if (nextToken(&nextToken, input) && nextToken == ID) {
+      printf("NUM * ID\n");
+    } else {
+      printf("NUM\n");
+    }
   } else {
     printf("Expected ID, NUM or NUM ID near %s\n", input);
     return 0;
   }
   
-  return input;
+  if (nextToken(&nextToken, input) && (nextToken == PLUS || nextToken == MINUS)) {
+    return parseExpression(input);
+  } else {
+    return input;
+  }
 }
 
 char const* parseConstraint(char const* input) {
