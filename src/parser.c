@@ -20,6 +20,7 @@ char const* skipWhite(char const* input) {
  * Get the next token from the input string
  */
 char const* nextToken(TOKEN* token, char const* input) {
+  size_t regexLen;
   input = skipWhite(input);
 
   if (strncmp(input, "max", 3) == 0) {
@@ -38,11 +39,17 @@ char const* nextToken(TOKEN* token, char const* input) {
     *token = MINUS;
     return input + 1;
   } else if (*input == '\0') {
-    *token = EOF;
+    *token = PEOF;
     return input;
+  } else if ((regexLen = nfaMatches(idRegex.start, input)) > 0) {
+    *token = ID;
+    return input + regexLen;
+  } else if ((regexLen = nfaMatches(numRegex.start, input)) > 0) {
+    *token = NUM;
+    return input + regexLen;
   }
   
-  printf("Could not parse valid token from %s\n", input);
+  printf("Could not parse valid token from \"%s\"\n", input);
   
   return 0;
 }
@@ -55,7 +62,9 @@ void parserInit() {
 char const* parseExpression(char const* input) {
   TOKEN token;
   
+  char const* tempInput;
   input = nextToken(&token, input);
+
   if (!input) {
     return 0;
   }
@@ -63,20 +72,21 @@ char const* parseExpression(char const* input) {
   if (token == ID) {
     printf("Handle ID\n");
   } else if (token == NUM) {
-    if (nextToken(&token, input) && token == ID) {
+    if ((tempInput = nextToken(&token, input)) && token == ID) {
       printf("NUM * ID\n");
+      input = tempInput;
     } else {
       printf("NUM\n");
     }
   } else {
-    printf("Expected ID, NUM or NUM ID near %s\n", input);
+    printf("Expected ID, NUM or NUM ID near \"%s\"\n", input);
     return 0;
   }
   
   printf("Parsed expression\n");
   
-  if (nextToken(&token, input) && (token == PLUS || token == MINUS)) {
-    return parseExpression(input);
+  if ((tempInput = nextToken(&token, input)) && (token == PLUS || token == MINUS)) {
+    return parseExpression(tempInput);
   } else {
     return input;
   }
@@ -117,18 +127,18 @@ char const* parseConstraint(char const* input) {
 }
 
 char const* parseConstraints(char const* input) {
-  
+  TOKEN token;
   input = parseConstraint(input);
   
   if (!input) {
     return 0;
   }
   
-  if (nextToken(&token, input) && nextToken == EOF) {
+  if (nextToken(&token, input) && token == PEOF) {
     printf("Parsed Constraints\n");
     return input;
   } else {
-    return parseConstraints(char const* input);
+    return parseConstraints(input);
   }
 }
 
@@ -157,10 +167,10 @@ bool parseString(char const* input) {
     return false;
   }
   
-  if (token == EOF) {
+  if (token == PEOF) {
     return true;
   } else if (token != ST) {
-    printf("Expected 's.t.' to be the next token near %s\n", input);
+    printf("Expected 's.t.' to be the next token near \"%s\"\n", input);
     return false;
   }
   
