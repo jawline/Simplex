@@ -16,6 +16,7 @@ char const* skipWhite(char const* input) {
  */
 char const* nextToken(TOKEN* token, char const* input) {
   input = skipWhite(input);
+
   if (strncmp(input, "max", 3) == 0) {
     *token = MAX;
     return input + 3;
@@ -32,9 +33,36 @@ char const* nextToken(TOKEN* token, char const* input) {
     *token = MINUS;
     return input + 1;
   }
+  
+  printf("Could not parse valid token from %s\n", input);
+  
   return 0;
 }
 
 void parserInit() {}
-void parseString(char const* input) {}
+
+char const* parseExpression(char const* input) {
+  return input;
+}
+
+bool parseString(char const* input) {
+  TOKEN nextToken;
+  input = nextToken(&token, input);
+  
+  if (!input) {
+    return false;
+  }
+
+  if (nextToken != MAX) {
+    printf("Expected max to be the next token at %s\n", input);
+    return false;
+  }
+  
+  input = parseExpression(input);
+  
+  if (!input) {
+    return false;
+  }
+}
+
 void parserFree() {}
