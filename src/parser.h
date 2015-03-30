@@ -8,7 +8,7 @@
  * Grammar:
  * MinMax: max Expression ['s.t.' Constraints]
  * Constraints: Constraint [Constraints]
- * Constraint: Expression '=' Expression
+ * Constraint: Expression '=' NUM
  * Expression: (ID | NUM | NUM ID) [('+' | '-') Expression]
  */
  
