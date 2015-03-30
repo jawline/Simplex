@@ -65,6 +65,8 @@ char const* parseExpression(char const* input) {
     return 0;
   }
   
+  printf("Parsed expression\n");
+  
   if (nextToken(&token, input) && (token == PLUS || token == MINUS)) {
     return parseExpression(input);
   } else {
@@ -73,6 +75,36 @@ char const* parseExpression(char const* input) {
 }
 
 char const* parseConstraint(char const* input) {
+  TOKEN token;
+  
+  input = parseExpression(input);
+  if (!input) {
+    return 0;
+  }
+  
+  input = nextToken(&token, input);
+  
+  if (!input) {
+    return 0;
+  }
+  
+  if (token != EQ) {
+    printf("Expected equals near %s\n", input);
+    return 0;
+  }
+  
+  input = nextToken(&token, input);
+  
+  if (!input) {
+    return 0;
+  }
+  
+  if (token != NUM) {
+    printf("Expected NUM near %s\n", input);
+    return 0;
+  }
+  
+  printf("Parsed constraint\n");
   return input;
 }
 
