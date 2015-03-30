@@ -2,6 +2,11 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
+#include <regexpm/match.h>
+#include <regexpm/parser.h>
+
+regex idRegex;
+regex numRegex;
 
 /**
  * Skip whitespace until the end of the input or the next character is found
@@ -42,7 +47,10 @@ char const* nextToken(TOKEN* token, char const* input) {
   return 0;
 }
 
-void parserInit() {}
+void parserInit() {
+  regexParse(&idRegex, "[a-zA-Z][a-zA-Z0-9]*");
+  regexParse(&numRegex, "[0-9]+(.[0-9]+)?");
+}
 
 char const* parseExpression(char const* input) {
   TOKEN token;
@@ -159,4 +167,7 @@ bool parseString(char const* input) {
   return parseConstraints(input) != 0;
 }
 
-void parserFree() {}
+void parserFree() {
+  regexFree(&idRegex);
+  regexFree(&numRegex);
+}
