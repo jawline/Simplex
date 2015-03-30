@@ -1,5 +1,6 @@
 #ifndef _SIMPLEX_PARSER_DEF_H_
 #define _SIMPLEX_PARSER_DEF_H_
+#include <stdbool.h>
 
 /**
  * ID = \[a-zA-Z][a-zA-Z0-9]*\
@@ -22,7 +23,7 @@ typedef enum {
 } TOKEN;
  
  void parserInit();
- void parseString(char const* input);
+ bool parseString(char const* input);
  void parserFree();
 
 #endif //_SIMPLEX_PARSER_DEF_H_
