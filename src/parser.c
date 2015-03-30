@@ -45,6 +45,22 @@ char const* nextToken(TOKEN* token, char const* input) {
 void parserInit() {}
 
 char const* parseExpression(char const* input) {
+  TOKEN nextToken;
+  
+  input = nextToken(&nextToken, input);
+  if (!input) {
+    return 0;
+  }
+  
+  if (nextToken == ID) {
+    
+  } else if (nextToken == NUM) {
+    
+  } else {
+    printf("Expected ID, NUM or NUM ID near %s\n", input);
+    return 0;
+  }
+  
   return input;
 }
 
