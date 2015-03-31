@@ -29,6 +29,9 @@ char const* nextToken(TOKEN* token, char const* input) {
   } else if (strncmp(input, "s.t.", 4) == 0) {
     *token = ST;
     return input + 4;
+  } else if (*input == ',') {
+    *token = COMMA;
+    return input + 1;
   } else if (*input == '=') {
     *token = EQ;
     return input + 1;
