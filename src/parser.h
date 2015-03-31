@@ -20,6 +20,7 @@ typedef enum {
  EQ,
  PLUS,
  MINUS,
+ COMMA,
  PEOF
 } TOKEN;
  
