@@ -15,5 +15,6 @@ int main(int argc, char** argv) {
 	parseString(&instance, argv[1]);
 	parserFree();
 
+	printTable(&instance);
 	freeTable(&instance);
 }
