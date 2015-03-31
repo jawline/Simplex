@@ -1,4 +1,0 @@
-#ifndef _TABLEAU_ENTRY_DEF_H_
-#define _TABLEAU_ENTRY_DEF_H_
-
-#endif //_TABLEAU_ENTRY_DEF_H_
