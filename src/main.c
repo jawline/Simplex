@@ -8,7 +8,12 @@ int main(int argc, char** argv) {
 		return -1;
 	}
 
+	table instance;
+	initialiseTable(&instance);
+
 	parserInit();
-	parseString(argv[1]);
+	parseString(&instance, argv[1]);
 	parserFree();
+
+	freeTable(&instance);
 }

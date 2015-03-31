@@ -146,7 +146,7 @@ char const* parseConstraints(char const* input) {
   }
 }
 
-bool parseString(char const* input) {
+bool parseString(table* instance, char const* input) {
   TOKEN token;
   input = nextToken(&token, input);
   

@@ -1,6 +1,7 @@
 #ifndef _SIMPLEX_PARSER_DEF_H_
 #define _SIMPLEX_PARSER_DEF_H_
 #include <stdbool.h>
+#include "tableau.h"
 
 /**
  * ID = \[a-zA-Z][a-zA-Z0-9]*\
@@ -25,7 +26,7 @@ typedef enum {
 } TOKEN;
  
  void parserInit();
- bool parseString(char const* input);
+ bool parseString(table* instance, char const* input);
  void parserFree();
 
 #endif //_SIMPLEX_PARSER_DEF_H_

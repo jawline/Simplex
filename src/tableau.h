@@ -5,17 +5,17 @@
 
 typedef struct {
   column* columns;
-  unsigned int numColumns;
+  int numColumns;
   
   row** rows;
-  unsigned int numRows;
+  int numRows;
 } table;
 
 void initialiseTable(table* instance);
 void freeTable(table* instance);
 
-int getTableColumnId(table* instance);
-column* getTableColumn(table* instance);
-int addTableColumn(char const* name, unsigned int nameLength);
+int getTableColumnId(table* instance, char const* name);
+column* getTableColumn(table* instance, char const* name);
+int addTableColumn(table* instance, char const* name, size_t nameLength);
 
 #endif //_SIMPLEX_TABLAEU_DEF_H_
