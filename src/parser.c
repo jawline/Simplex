@@ -158,6 +158,30 @@ bool parseString(char const* input) {
     return false;
   }
   
+  input = nextToken(&token, input);
+  
+  if (!input) {
+    return false;
+  }
+  
+  if (token != ID) {
+    printf("Expected ID near \"%s\"", input);
+    return false;
+  }
+  
+  printf("Maximizing ID\n");
+  
+  input = nextToken(&token, input);
+  
+  if (!input) {
+    return false;
+  }
+  
+  if (token != EQ) {
+    printf("Expected EQ near \"%s\"", input);
+    return false;
+  }
+  
   input = parseExpression(input);
   
   if (!input) {
