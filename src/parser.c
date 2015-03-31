@@ -137,11 +137,11 @@ char const* parseConstraints(char const* input) {
     return 0;
   }
   
-  if (nextToken(&token, input) && token == PEOF) {
-    printf("Parsed Constraints\n");
-    return input;
-  } else {
+  if (nextToken(&token, input) && token == COMMA) {
     return parseConstraints(input);
+  } else {
+    printf("Parsed Constraints");
+    return input;
   }
 }
 
@@ -177,7 +177,18 @@ bool parseString(char const* input) {
     return false;
   }
   
-  return parseConstraints(input) != 0;
+  input = parseConstraints(input);
+  
+  if (!input) {
+    return false;
+  }
+  
+  if (token != PEOF) {
+    printf("Unexpected symbol near \"%s\"\n", input);
+    return false;
+  } else {
+    return true;
+  }
 }
 
 void parserFree() {
