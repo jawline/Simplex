@@ -6,7 +6,7 @@
  * ID = \[a-zA-Z][a-zA-Z0-9]*\
  * NUM = \[0-9]+(.[0-9]+)?\
  * Grammar:
- * MinMax: max Expression ['s.t.' Constraints]
+ * MinMax: max ID EQ Expression ['s.t.' Constraints]
  * Constraints: Constraint [',' Constraints]
  * Constraint: Expression '=' NUM
  * Expression: (ID | NUM | NUM ID) [('+' | '-') Expression]
