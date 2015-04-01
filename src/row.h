@@ -5,4 +5,8 @@ typedef struct {
   float* data;
 } row;
 
+void initialiseRow(row* instance, unsigned int numColumns);
+void expandRow(row* instance, unsigned int numNewColumns);
+void freeRow(row* instance);
+
 #endif //_ROW_DEF_H_
