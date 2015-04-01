@@ -55,10 +55,21 @@ int addTableColumn(table* instance, char const* name, size_t nameLength) {
 		return getTableColumnIdWithLength(instance, name, nameLength);
 	}
 
+	//Allocate memory and copy existing columns
 	column* newColumns = malloc(sizeof(column) * (instance->numColumns + 1));
 	memcpy(newColumns, instance->columns, sizeof(column) * instance->numColumns);
+	
+	//Free existing data and set new data
+	if (instance->columns) {
+		free(instance->columns);
+	}
 	instance->columns = newColumns;
+	
+	//Initialise new column
 	initialiseColumn(&instance->columns[instance->numColumns], name, nameLength);
+	
+	//Expand existing row data
+	expandRows(instance, instance->numColumns, instance->numColumns+1);
 	return instance->numColumns++;
 }
 
