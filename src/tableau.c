@@ -18,9 +18,9 @@ void freeTable(table* instance) {
 		free(instance->columns);
 		instance->columns = 0;
 	}
-	if (instance->rows) {
-		free(instance->rows);
-		instance->rows = 0;
+	if (instance->rowData) {
+		free(instance->rowData);
+		instance->rowData = 0;
 	}
 }
 
@@ -94,7 +94,7 @@ void expandRows(table* instance, int oldNumColumns, int newNumColumns) {
 	//Allocate new data
 	float* newRowData = malloc(sizeof(float) * instance->numRows * newNumColumns);
 	float* oldRowData = instance->rowData;
-	memset(newRowData, 0, numNewColumns * instance->numRows * sizeof(float));
+	memset(newRowData, 0, newNumColumns * instance->numRows * sizeof(float));
 	
 	//Copy the existing rows
 	for (unsigned int column = 0; column < oldNumColumns; column++) {
