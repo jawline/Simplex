@@ -19,6 +19,7 @@ int getTableColumnIdWithLength(table* instance, char const* name, size_t nameLen
 column* getTableColumn(table* instance, char const* name);
 int addTableColumn(table* instance, char const* name, size_t nameLength);
 
+void addRow(table* instance);
 void expandRows(table* instance, int oldNumColumns, int newNumColumns);
 
 void printTable(table* instance);
