@@ -78,6 +78,8 @@ char const* parseExpression(table* instance, char const* input) {
   char const* tokenStart;
   input = nextToken(&token, input, &tokenStart, &tokenSize);
 
+  addTableRow(instance);
+
   if (!input) {
     return 0;
   }
@@ -109,6 +111,8 @@ char const* parseConstraint(table* instance, char const* input) {
   TOKEN token;
   size_t tokenSize;
   char const* tokenStart;
+
+  addTableRow(instance);
   
   input = parseExpression(instance, input);
   if (!input) {
@@ -137,7 +141,6 @@ char const* parseConstraint(table* instance, char const* input) {
     return 0;
   }
   
-  printf("Parsed constraint\n");
   return input;
 }
 
@@ -155,7 +158,6 @@ char const* parseConstraints(table* instance, char const* input) {
   if ((tempInput = nextToken(&token, input, &tokenStart, &tokenSize)) && token == COMMA) {
     return parseConstraints(instance, tempInput);
   } else {
-    printf("Parsed Constraints");
     return input;
   }
 }

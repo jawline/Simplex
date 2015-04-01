@@ -73,7 +73,7 @@ int addTableColumn(table* instance, char const* name, size_t nameLength) {
 	return instance->numColumns++;
 }
 
-void addRow(table* instance) {
+void addTableRow(table* instance) {
 	
 	//Allocate memory and copy over existing rows
 	float* newRowData = malloc(sizeof(float) * (instance->numRows + 1) * instance->numColumns);
@@ -108,6 +108,7 @@ void expandRows(table* instance, int oldNumColumns, int newNumColumns) {
 		free(instance->rowData);
 	}
 	instance->rowData = newRowData;
+	instance->numRows++;
 }
 
 void printTable(table* instance) {
@@ -115,4 +116,10 @@ void printTable(table* instance) {
 		printf("| %s |", instance->columns[i].name);
 	}
 	printf("\n");
+	for (unsigned int row = 0; row < instance->numRows; row++) {
+		for (unsigned int column = 0; column < instance->numColumns; column++) {
+			printf("| %f |", instance->rowData[row * instance->numColumns + column]);
+		}
+		printf("\n");
+	}
 }
