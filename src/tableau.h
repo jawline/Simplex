@@ -5,9 +5,9 @@
 
 typedef struct {
   column* columns;
+  float* rowData;
+
   int numColumns;
-  
-  row** rows;
   int numRows;
 } table;
 
@@ -18,6 +18,8 @@ int getTableColumnId(table* instance, char const* name);
 int getTableColumnIdWithLength(table* instance, char const* name, size_t nameLength);
 column* getTableColumn(table* instance, char const* name);
 int addTableColumn(table* instance, char const* name, size_t nameLength);
+
+void expandRows(table* instance, int oldNumColumns, int newNumColumns);
 
 void printTable(table* instance);
 
