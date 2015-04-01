@@ -6,8 +6,7 @@
 void initialiseTable(table* instance) {
 	instance->columns = 0;
 	instance->numColumns = 0;
-
-	instance->rows = 0;
+	instance->rowData = 0;
 	instance->numRows = 0;
 }
 
@@ -61,6 +60,17 @@ int addTableColumn(table* instance, char const* name, size_t nameLength) {
 	instance->columns = newColumns;
 	initialiseColumn(&instance->columns[instance->numColumns], name, nameLength);
 	return instance->numColumns++;
+}
+
+void expandRows(table* instance, int oldNumColumns, int newNumColumns) {
+	float* newRowData = malloc(sizeof(float) * instance->numRows * newNumColumns);
+	float* oldRowData = instance->numRows;
+	memset(newRowData, 0, numNewColumns * instance->numRows * sizeof(float));
+	for (unsigned int column = 0; column < oldNumColumns; column++) {
+		for (unsigned int row = 0; row < instance->numRows; row++) {
+			newRowData[(row * oldNumColumns) + column] = oldRowData[(row * oldNumColumns) + column];
+		}
+	}
 }
 
 void printTable(table* instance) {
