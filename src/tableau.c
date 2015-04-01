@@ -62,15 +62,41 @@ int addTableColumn(table* instance, char const* name, size_t nameLength) {
 	return instance->numColumns++;
 }
 
+void addRow(table* instance) {
+	
+	//Allocate memory and copy over existing rows
+	float* newRowData = malloc(sizeof(float) * (instance->numRows + 1) * instance->numColumns);
+	memcpy(newRowData, instance->rowData, sizeof(float) * instance->numRows * instance->numColumns);
+	
+	//Set new rows to 0
+	memset(newRowData + (instance->numRows * instance->numColumns), 0, sizeof(float) * instance->numColumns);
+
+	//Free old data and set new row data
+	if (instance->rowData) {
+		free(instance->rowData);
+	}
+	instance->rowData = newRowData;
+}
+
 void expandRows(table* instance, int oldNumColumns, int newNumColumns) {
+	
+	//Allocate new data
 	float* newRowData = malloc(sizeof(float) * instance->numRows * newNumColumns);
-	float* oldRowData = instance->numRows;
+	float* oldRowData = instance->rowData;
 	memset(newRowData, 0, numNewColumns * instance->numRows * sizeof(float));
+	
+	//Copy the existing rows
 	for (unsigned int column = 0; column < oldNumColumns; column++) {
 		for (unsigned int row = 0; row < instance->numRows; row++) {
 			newRowData[(row * oldNumColumns) + column] = oldRowData[(row * oldNumColumns) + column];
 		}
 	}
+	
+	//Free old data and set new data
+	if (instance->rowData) {
+		free(instance->rowData);
+	}
+	instance->rowData = newRowData;
 }
 
 void printTable(table* instance) {
