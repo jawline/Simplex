@@ -6,7 +6,7 @@ typedef struct {
 } row;
 
 void initialiseRow(row* instance, unsigned int numColumns);
-void expandRow(row* instance, unsigned int numNewColumns);
+void expandRow(row* instance, unsigned int numOldColumns, unsigned int numNewColumns);
 void freeRow(row* instance);
 
 #endif //_ROW_DEF_H_
