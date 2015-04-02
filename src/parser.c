@@ -91,7 +91,8 @@ char const* parseExpression(table* instance, char const* input) {
       addTableColumn(instance, tokenStart, tokenSize);
       input = tempInput;
     } else {
-      printf("NUM\n");
+      printf("Expected ID or NUM ID near \"%s\"", input);
+      return 0;
     }
   } else {
     printf("Expected ID, NUM or NUM ID near \"%s\"\n", input);
