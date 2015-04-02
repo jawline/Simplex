@@ -23,6 +23,7 @@ void freeTable(table* instance);
  * Get the index of the column in the table
  */
 int getTableColumnId(table* instance, char const* name);
+int getTableColumnIdWithLength(table* instance, char const* name, size_t nameLength);
 
 /**
  * Get a columns information from the table
@@ -33,7 +34,6 @@ column* getTableColumn(table* instance, char const* name);
  * Add a new column to the table
  */
 int addTableColumn(table* instance, char const* name, size_t nameLength);
-int getTableColumnIdWithLength(table* instance, char const* name, size_t nameLength);
 
 /**
  * Add a new row to the table
