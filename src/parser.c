@@ -86,9 +86,16 @@ char const* parseExpression(table* instance, char const* input) {
   
   if (token == ID) {
     addTableColumn(instance, tokenStart, tokenSize);
+    setTableFieldWithColumnNameAndLength(instance, getCurrentRow(instance), tokenStart, tokenSize, 1);
   } else if (token == NUM) {
+    float parsedValueAsNumber;
+    if (!sscanf(tokenStart, "%d", &parsedValueAsFloat)) {
+      printf("SSCANF FAIL\n");
+      return 0;
+    }
     if ((tempInput = nextToken(&token, input, &tokenStart, &tokenSize)) && token == ID) {
       addTableColumn(instance, tokenStart, tokenSize);
+      setTableFieldWithColumnNameAndLength(instance, getCurrentRow(instance), tokenStart, tokenSize, parsedValueAsNumber);
       input = tempInput;
     } else {
       printf("Expected ID or NUM ID near \"%s\"", input);
