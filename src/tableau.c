@@ -111,6 +111,13 @@ void expandRows(table* instance, int oldNumColumns, int newNumColumns) {
 	instance->rowData = newRowData;
 }
 
+float* getCurrentRow() {
+	if (!instance->rowData) {
+		return 0;
+	}
+	return instance->rowData + (instance->numColumns * (instance->numRows - 1));
+}
+
 void printTable(table* instance) {
 	for (unsigned int i = 0; i < instance->numColumns; i++) {
 		printf("| %s |", instance->columns[i].name);
