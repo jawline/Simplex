@@ -10,7 +10,7 @@
  * MinMax: max ID EQ Expression ['s.t.' Constraints]
  * Constraints: Constraint [',' Constraints]
  * Constraint: Expression '=' NUM
- * Expression: (ID | NUM | NUM ID) [('+' | '-') Expression]
+ * Expression: (ID | NUM ID) [('+' | '-') Expression]
  */
  
 typedef enum {
