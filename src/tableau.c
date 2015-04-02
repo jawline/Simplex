@@ -87,6 +87,7 @@ void addTableRow(table* instance) {
 		free(instance->rowData);
 	}
 	instance->rowData = newRowData;
+	instance->numRows++;
 }
 
 void expandRows(table* instance, int oldNumColumns, int newNumColumns) {
@@ -108,7 +109,6 @@ void expandRows(table* instance, int oldNumColumns, int newNumColumns) {
 		free(instance->rowData);
 	}
 	instance->rowData = newRowData;
-	instance->numRows++;
 }
 
 void printTable(table* instance) {
