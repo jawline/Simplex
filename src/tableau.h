@@ -46,9 +46,24 @@ void addTableRow(table* instance);
 void expandRows(table* instance, int oldNumColumns, int newNumColumns);
 
 /**
- * Return a pointer to the last row added to the table
+ * Return the ID of the last row added
  */
-float* getCurrentRow();
+unsigned int getCurrentRow();
+
+/**
+ * Return a pointer to the row data for the specified row number
+ */
+float* getRowData(unsigned int rowNum);
+
+/**
+ * Get the table data at a given field
+ */
+float getTableField(unsigned int row, unsigned int column);
+
+/**
+ * Set the table data at a given field
+ */
+void setTableField(unsigned int row, unsigned int column, float val) {
 
 /**
  * Print debug info about the table
