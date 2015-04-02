@@ -111,23 +111,41 @@ void expandRows(table* instance, int oldNumColumns, int newNumColumns) {
 	instance->rowData = newRowData;
 }
 
-unsigned int getCurrentRow() {
+unsigned int getCurrentRow(table* instance) {
 	if (!instance->rowData) {
 		return 0;
 	}
 	return instance->numRows - 1;
 }
 
-float* getRowData(unsigned int rowNum) {
+float* getRowData(table* instance, unsigned int rowNum) {
 	return instance->rowData + (instance->numColumns * rowNum);
 }
 
-float getTableField(unsigned int row, unsigned int column) {
-	return *(getRowData(row) + column);
+float getTableField(table* instance, unsigned int row, unsigned int column) {
+	return *(getRowData(instance, row) + column);
 }
 
-void setTableField(unsigned int row, unsigned int column, float val) {
-	*(getRowData(row) + column) = val;
+void setTableField(table* instance, unsigned int row, unsigned int column, float val) {
+	*(getRowData(instance, row) + column) = val;
+}
+
+float getTableFieldWithColumnNameAndLength(table* instance, unsigned int row, char const* columnName, float val, int length) {
+	int col;
+	if ((col = getTableColumnIdWithLength(instance, columnName, length)) == -1) {
+		printf("Column %s does not exist\n", columnName);
+		return;
+	}
+	getTableField(instance, row, col, val);	
+}
+
+void setTableFieldWithColumnNameAndLength(table* instance, unsigned int row, char const* columnName, float val, int length) {
+	int col;
+	if ((col = getTableColumnIdWithLength(instance, columnName, length)) == -1) {
+		printf("Column %s does not exist\n", columnName);
+		return;
+	}
+	setTableField(instance, row, col, val);
 }
 
 void printTable(table* instance) {
