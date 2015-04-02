@@ -130,7 +130,7 @@ void setTableField(table* instance, unsigned int row, unsigned int column, float
 	*(getRowData(instance, row) + column) = val;
 }
 
-float getTableFieldWithColumnNameAndLength(table* instance, unsigned int row, char const* columnName, float val, int length) {
+float getTableFieldWithColumnNameAndLength(table* instance, unsigned int row, char const* columnName, int length) {
 	int col;
 	if ((col = getTableColumnIdWithLength(instance, columnName, length)) == -1) {
 		printf("Column %s does not exist\n", columnName);
@@ -139,13 +139,21 @@ float getTableFieldWithColumnNameAndLength(table* instance, unsigned int row, ch
 	getTableField(instance, row, col, val);	
 }
 
-void setTableFieldWithColumnNameAndLength(table* instance, unsigned int row, char const* columnName, float val, int length) {
+void setTableFieldWithColumnNameAndLength(table* instance, unsigned int row, char const* columnName, int length, float val) {
 	int col;
 	if ((col = getTableColumnIdWithLength(instance, columnName, length)) == -1) {
 		printf("Column %s does not exist\n", columnName);
 		return;
 	}
 	setTableField(instance, row, col, val);
+}
+
+float getTableFieldWithColumnNameAndLength(table* instance, unsigned int row, char const* columnName) {
+	return getTableFieldWithColumnNameAndLength(instance, row, columnName, val, strlen(columnName));
+}
+
+void setTableFieldWithColumnNameAndLength(table* instance, unsigned int row, char const* columnName, float val) {
+	getTableFieldWithColumnNameAndLength(instance, row, columnName, strlen(columnName), val);
 }
 
 void printTable(table* instance) {
