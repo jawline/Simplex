@@ -111,11 +111,23 @@ void expandRows(table* instance, int oldNumColumns, int newNumColumns) {
 	instance->rowData = newRowData;
 }
 
-float* getCurrentRow() {
+unsigned int getCurrentRow() {
 	if (!instance->rowData) {
 		return 0;
 	}
-	return instance->rowData + (instance->numColumns * (instance->numRows - 1));
+	return instance->numRows - 1;
+}
+
+float* getRowData(unsigned int rowNum) {
+	return instance->rowData + (instance->numColumns * rowNum);
+}
+
+float getTableField(unsigned int row, unsigned int column) {
+	return *(getRowData(row) + column);
+}
+
+void setTableField(unsigned int row, unsigned int column, float val) {
+	*(getRowData(row) + column) = val;
 }
 
 void printTable(table* instance) {
