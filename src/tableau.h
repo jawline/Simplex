@@ -68,12 +68,16 @@ void setTableField(table* instance, unsigned int row, unsigned int column, float
 /**
  * Get a table field from a column name and row number
  */
+float getTableFieldWithColumnName(table* instance, unsigned int row, char const* columnName, float val);
 float getTableFieldWithColumnNameAndLength(table* instance, unsigned int row, char const* columnName, float val, int length);
 
 /**
  * Set a table field from a column name and row number
  */
+void setTableFieldWithColumnName(table* instance, unsigned int row, char const* columnName, float val);
 void setTableFieldWithColumnNameAndLength(table* instance, unsigned int row, char const* columnName, float val, int length);
+
+
 
 /**
  * Print debug info about the table
