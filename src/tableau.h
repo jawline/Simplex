@@ -48,22 +48,22 @@ void expandRows(table* instance, int oldNumColumns, int newNumColumns);
 /**
  * Return the ID of the last row added
  */
-unsigned int getCurrentRow();
+unsigned int getCurrentRow(table* instance);
 
 /**
  * Return a pointer to the row data for the specified row number
  */
-float* getRowData(unsigned int rowNum);
+float* getRowData(table* instance, unsigned int rowNum);
 
 /**
  * Get the table data at a given field
  */
-float getTableField(unsigned int row, unsigned int column);
+float getTableField(table* instance, unsigned int row, unsigned int column);
 
 /**
  * Set the table data at a given field
  */
-void setTableField(unsigned int row, unsigned int column, float val) {
+void setTableField(table* instance, unsigned int row, unsigned int column, float val) {
 
 /**
  * Print debug info about the table
