@@ -7,7 +7,7 @@ void initialiseTable(table* instance) {
 	instance->columns = 0;
 	instance->numColumns = 0;
 	instance->rowData = 0;
-	instance->numRows = 0;
+	instance->numRows = 1;
 }
 
 void freeTable(table* instance) {
@@ -134,7 +134,7 @@ float getTableFieldWithColumnNameAndLength(table* instance, unsigned int row, ch
 	int col;
 	if ((col = getTableColumnIdWithLength(instance, columnName, length)) == -1) {
 		printf("Column %s does not exist\n", columnName);
-		return 0;;
+		return 0;
 	}
 	return getTableField(instance, row, col);	
 }

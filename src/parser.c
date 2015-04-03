@@ -78,8 +78,6 @@ char const* parseExpression(table* instance, char const* input) {
   char const* tokenStart;
   input = nextToken(&token, input, &tokenStart, &tokenSize);
 
-  addTableRow(instance);
-
   if (!input) {
     return 0;
   }
@@ -148,7 +146,16 @@ char const* parseConstraint(table* instance, char const* input) {
     printf("Expected NUM near %s\n", input);
     return 0;
   }
-  
+
+
+  float parsedValueAsNumber;
+  if (!sscanf(tokenStart, "%f", &parsedValueAsNumber)) {
+    printf("SSCANF FAIL\n");
+    return 0;
+  }
+
+  setTableFieldWithColumnName(instance, getCurrentRow(instance), "result", parsedValueAsNumber);
+
   return input;
 }
 
@@ -174,6 +181,8 @@ bool parseString(table* instance, char const* input) {
   TOKEN token;
   char const* tokenStart;
   size_t tokenSize;
+  
+  addTableColumn(instance, "result", 6);
   
   input = nextToken(&token, input, &tokenStart, &tokenSize);
   if (!input) {
