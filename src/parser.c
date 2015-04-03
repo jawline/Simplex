@@ -89,7 +89,7 @@ char const* parseExpression(table* instance, char const* input) {
     setTableFieldWithColumnNameAndLength(instance, getCurrentRow(instance), tokenStart, tokenSize, 1);
   } else if (token == NUM) {
     float parsedValueAsNumber;
-    if (!sscanf(tokenStart, "%d", &parsedValueAsFloat)) {
+    if (!sscanf(tokenStart, "%f", &parsedValueAsNumber)) {
       printf("SSCANF FAIL\n");
       return 0;
     }
