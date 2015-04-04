@@ -71,7 +71,7 @@ void parserInit() {
   regexParse(&numRegex, "[0-9]+(.[0-9]+)?");
 }
 
-char const* parseExpression(table* instance, char const* input) {
+char const* parseExpression(table* instance, char const* input, bool negate) {
   TOKEN token;
   size_t tokenSize;
   char const* tempInput;
@@ -84,7 +84,7 @@ char const* parseExpression(table* instance, char const* input) {
   
   if (token == ID) {
     addTableColumn(instance, tokenStart, tokenSize);
-    setTableFieldWithColumnNameAndLength(instance, getCurrentRow(instance), tokenStart, tokenSize, 1);
+    setTableFieldWithColumnNameAndLength(instance, getCurrentRow(instance), tokenStart, tokenSize, negate ? -1 : 1);
   } else if (token == NUM) {
     float parsedValueAsNumber;
     if (!sscanf(tokenStart, "%f", &parsedValueAsNumber)) {
@@ -93,7 +93,7 @@ char const* parseExpression(table* instance, char const* input) {
     }
     if ((tempInput = nextToken(&token, input, &tokenStart, &tokenSize)) && token == ID) {
       addTableColumn(instance, tokenStart, tokenSize);
-      setTableFieldWithColumnNameAndLength(instance, getCurrentRow(instance), tokenStart, tokenSize, parsedValueAsNumber);
+      setTableFieldWithColumnNameAndLength(instance, getCurrentRow(instance), tokenStart, tokenSize, negate ? -parsedValueAsNumber : parsedValueAsNumber);
       input = tempInput;
     } else {
       printf("Expected ID or NUM ID near \"%s\"", input);
@@ -107,7 +107,7 @@ char const* parseExpression(table* instance, char const* input) {
   printf("Parsed expression\n");
   
   if ((tempInput = nextToken(&token, input, &tokenStart, &tokenSize)) && (token == PLUS || token == MINUS)) {
-    return parseExpression(instance, tempInput);
+    return parseExpression(instance, tempInput, negate);
   } else {
     return input;
   }
@@ -120,7 +120,7 @@ char const* parseConstraint(table* instance, char const* input) {
 
   addTableRow(instance);
   
-  input = parseExpression(instance, input);
+  input = parseExpression(instance, input, false);
   if (!input) {
     return 0;
   }
@@ -177,6 +177,16 @@ char const* parseConstraints(table* instance, char const* input) {
   }
 }
 
+bool postParseStep(table* instance) {
+  
+  //Make results the last column (For formatting)
+  for (unsigned int i = getTableColumnId(instance, "result"); i < instance->numColumns-1; i++) {
+    swapTableColumn(instance, i, i+1);
+  }
+
+  return true;
+}
+
 bool parseString(table* instance, char const* input) {
   TOKEN token;
   char const* tokenStart;
@@ -217,12 +227,11 @@ bool parseString(table* instance, char const* input) {
     return false;
   }
   
-  input = parseExpression(instance, input);
+  input = parseExpression(instance, input, true);
   
   if (!input) {
     return false;
   }
-  
   
   input = nextToken(&token, input, &tokenStart, &tokenSize);
   if (!input) {
@@ -230,7 +239,7 @@ bool parseString(table* instance, char const* input) {
   }
   
   if (token == PEOF) {
-    return true;
+    return postParseStep(instance);
   } else if (token != ST) {
     printf("Expected 's.t.' to be the next token near \"%s\"\n", input);
     return false;
@@ -252,7 +261,7 @@ bool parseString(table* instance, char const* input) {
     printf("Unexpected symbol near \"%s\".\n", input);
     return false;
   } else {
-    return true;
+    return postParseStep(instance);
   }
 }
 

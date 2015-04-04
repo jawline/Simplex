@@ -156,6 +156,18 @@ void setTableFieldWithColumnName(table* instance, unsigned int row, char const* 
 	setTableFieldWithColumnNameAndLength(instance, row, columnName, strlen(columnName), val);
 }
 
+void swapTableColumn(table* instance, unsigned int a, unsigned int b) {
+	float temp;
+	for (unsigned int i = 0; i < instance->numRows; i++) {
+		temp = getTableField(instance, i, a);
+		setTableField(instance, i, a, getTableField(instance, i, b));
+		setTableField(instance, i, b, temp);
+	}
+	column tempCol = instance->columns[a];
+	instance->columns[a] = instance->columns[b];
+	instance->columns[b] = tempCol;
+}
+
 void printTable(table* instance) {
 	for (unsigned int i = 0; i < instance->numColumns; i++) {
 		printf("| %s |", instance->columns[i].name);

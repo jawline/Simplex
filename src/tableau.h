@@ -77,6 +77,8 @@ float getTableFieldWithColumnNameAndLength(table* instance, unsigned int row, ch
 void setTableFieldWithColumnName(table* instance, unsigned int row, char const* columnName, float val);
 void setTableFieldWithColumnNameAndLength(table* instance, unsigned int row, char const* columnName, int length, float val);
 
+void swapTableColumn(table* instance, unsigned int a, unsigned int b);
+
 /**
  * Print debug info about the table
  */
