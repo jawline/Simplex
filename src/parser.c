@@ -88,7 +88,7 @@ char const* parseExpression(table* instance, char const* input) {
   } else if (token == NUM) {
     float parsedValueAsNumber;
     if (!sscanf(tokenStart, "%f", &parsedValueAsNumber)) {
-      printf("SSCANF FAIL\n");
+      printf("Unable to parse number from NUM token\n");
       return 0;
     }
     if ((tempInput = nextToken(&token, input, &tokenStart, &tokenSize)) && token == ID) {
