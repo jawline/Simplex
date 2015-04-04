@@ -100,7 +100,7 @@ void expandRows(table* instance, int oldNumColumns, int newNumColumns) {
 	//Copy the existing rows
 	for (unsigned int column = 0; column < oldNumColumns; column++) {
 		for (unsigned int row = 0; row < instance->numRows; row++) {
-			newRowData[(row * oldNumColumns) + column] = oldRowData[(row * oldNumColumns) + column];
+			newRowData[(row * newNumColumns) + column] = oldRowData[(row * oldNumColumns) + column];
 		}
 	}
 	

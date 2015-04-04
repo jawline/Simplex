@@ -104,8 +104,6 @@ char const* parseExpression(table* instance, char const* input, bool negate) {
     return 0;
   }
   
-  printf("Parsed expression\n");
-  
   if ((tempInput = nextToken(&token, input, &tokenStart, &tokenSize)) && (token == PLUS || token == MINUS)) {
     return parseExpression(instance, tempInput, negate);
   } else {
@@ -215,7 +213,7 @@ bool parseString(table* instance, char const* input) {
   }
 
   addTableColumn(instance, tokenStart, tokenSize);
-  setTableFieldWithColumnNameAndLength(instance, getCurrentRow(instance), tokenStart, tokenSize, 1);
+  setTableFieldWithColumnNameAndLength(instance, getCurrentRow(instance), tokenStart, tokenSize, 12);
   
   input = nextToken(&token, input, &tokenStart, &tokenSize);
   if (!input) {
