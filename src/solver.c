@@ -23,15 +23,19 @@ int findBasic(table* instance, int row) {
 	return -1;
 }
 
+/**
+ * Return the ID of the pivot column or -1 if there is not pivot column
+ */
 int findPivotColumn(table* instance) {
 	int cPivot = 0;
 
-	for (unsigned int i = 1; i < instance->numColumns - 1; i++) {
+	for (unsigned int i = 0; i < instance->numColumns - 1; i++) {
 		if (getTableField(instance, 0, i) < getTableField(instance, 0, cPivot)) {
 			cPivot = i;
 		}
 	}
 
+	//If the columns objective value is >= 0 then it cannot be a pivot column
 	return getTableField(instance, 0, cPivot) < 0 ? cPivot : -1;
 }
 
