@@ -91,7 +91,7 @@ void makeOtherRowsUnit(table* instance, int baseRow, int col) {
 	}
 }
 
-void solveTable(table* instance) {
+void solveTable(table* instance, simplex_result* results) {
 	
 	//Find the initial basic variables (Only occur in one col)
 	int* rowBasicData = malloc(sizeof(int) * instance->numRows);
@@ -129,4 +129,5 @@ void solveTable(table* instance) {
 	}
 
 	free(rowBasicData);
+	results->value = getTableField(instance, 0, instance->numColumns - 1);
 }
