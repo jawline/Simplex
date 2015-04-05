@@ -62,6 +62,14 @@ int findPivotRow(table* instance, int column) {
 	return cPivot;
 }
 
+void makeRowUnit(table* instance, int row, int col) {
+	float ratio = 1/getTableField(instance, row, col);
+	printf("Ratio %f\n", ratio);
+	for (unsigned int i = 0; i < instance->numColumns; i++) {
+		setTableField(instance, row, i, ratio * getTableField(instance, row, i));
+	}
+}
+
 void solveTable(table* instance) {
 	//NOTE: It is assumed that the last column in the table is the results column
 	
@@ -91,10 +99,15 @@ void solveTable(table* instance) {
 	int pivotC = findPivotColumn(instance);
 	int pivotR = findPivotRow(instance, pivotC);
 	float ratio = findRatio(instance, pivotR, pivotC, instance->numColumns-1);
-	
+
 	printf("Pivot Column %i\n", pivotC);
 	printf("Pivot Row: %i\n", pivotR);
 	printf("Pivot Ratio: %f\n", ratio);
+
+	printTable(instance);
+	printf("Make unit\n");
+	makeRowUnit(instance, pivotR, pivotC);
+	printTable(instance);
 
 	free(rowBasicData);
 }
