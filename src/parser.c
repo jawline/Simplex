@@ -105,6 +105,11 @@ char const* parseExpression(table* instance, char const* input, bool negate) {
   }
   
   if ((tempInput = nextToken(&token, input, &tokenStart, &tokenSize)) && (token == PLUS || token == MINUS)) {
+    
+    if (token == MINUS) {
+      negate = !negate;
+    }
+
     return parseExpression(instance, tempInput, negate);
   } else {
     return input;

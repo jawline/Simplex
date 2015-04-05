@@ -76,7 +76,7 @@ void makeRowUnit(table* instance, int row, int col) {
 
 void subtractRow(table* instance, int rowToSub, int rowFrom, float ratio) {
 	for (unsigned int i = 0; i < instance->numColumns; i++) {
-		setTableField(instance, rowToSub, i, getTableField(instance, rowToSub, i) - (getTableField(instance, rowFrom, i) * ratio));
+		setTableField(instance, rowToSub, i, getTableField(instance, rowToSub, i) - (getTableField(instance, rowFrom, i) / ratio));
 	}
 }
 

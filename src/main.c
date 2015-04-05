@@ -10,6 +10,7 @@ int main(int argc, char** argv) {
 	}
 
 	table instance;
+	simplex_result results;
 	
 	parserInit();
 	
@@ -20,7 +21,10 @@ int main(int argc, char** argv) {
 		printf("Failed to parse table. Exit\n");
 		return -1;
 	}
-	solveTable(&instance);
+	solveTable(&instance, &results);
+
+	printf("Results: %f\n", results.value);
+
 	freeTable(&instance);
 	parserFree();
 	return 0;
