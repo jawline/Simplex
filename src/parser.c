@@ -213,7 +213,7 @@ bool parseString(table* instance, char const* input) {
   }
 
   addTableColumn(instance, tokenStart, tokenSize);
-  setTableFieldWithColumnNameAndLength(instance, getCurrentRow(instance), tokenStart, tokenSize, 12);
+  setTableFieldWithColumnNameAndLength(instance, getCurrentRow(instance), tokenStart, tokenSize, 1);
   
   input = nextToken(&token, input, &tokenStart, &tokenSize);
   if (!input) {

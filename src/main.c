@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "parser.h"
+#include "solver.h"
 
 int main(int argc, char** argv) {
 
@@ -19,6 +20,7 @@ int main(int argc, char** argv) {
 		printf("Failed to parse table. Exit\n");
 		return -1;
 	}
+	solveTable(&instance);
 	freeTable(&instance);
 	parserFree();
 	return 0;
