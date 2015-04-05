@@ -29,7 +29,8 @@ int findBasic(table* instance, int row) {
 int findPivotColumn(table* instance) {
 	int cPivot = 0;
 
-	for (unsigned int i = 0; i < instance->numColumns - 1; i++) {
+	//Slight optimization, as the first row will never change and will never be the pivot it can be excluded
+	for (unsigned int i = 1; i < instance->numColumns - 1; i++) {
 		if (getTableField(instance, 0, i) < getTableField(instance, 0, cPivot)) {
 			cPivot = i;
 		}
@@ -55,7 +56,7 @@ int findPivotRow(table* instance, int column) {
 	int cPivot = 1;
 	float cPivotR = findRatio(instance, 1, column, resultsColumn);
 	
-	//Row 0 is objective function
+	//Find the row to be used as the pivot, excluding the objective function
 	for (unsigned int i = 1; i < instance->numRows; i++) {
 		if (findRatio(instance, i, column, resultsColumn) < cPivotR) {
 			cPivot = i;
@@ -91,7 +92,6 @@ void makeOtherRowsUnit(table* instance, int baseRow, int col) {
 }
 
 void solveTable(table* instance) {
-	//NOTE: It is assumed that the last column in the table is the results column
 	
 	//Find the initial basic variables (Only occur in one col)
 	int* rowBasicData = malloc(sizeof(int) * instance->numRows);
