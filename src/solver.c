@@ -121,13 +121,9 @@ void solveTable(table* instance) {
 	while ((pivotC = findPivotColumn(instance)) != -1) {
 		int pivotR = findPivotRow(instance, pivotC);
 		float ratio = findRatio(instance, pivotR, pivotC, instance->numColumns-1);
-
 		printf("Pivot Column %i\n", pivotC);
 		printf("Pivot Row: %i\n", pivotR);
 		printf("Pivot Ratio: %f\n", ratio);
-
-		printTable(instance);
-		printf("Make unit\n");
 		makeRowUnit(instance, pivotR, pivotC);
 		makeOtherRowsUnit(instance, pivotR, pivotC);
 		printTable(instance);
