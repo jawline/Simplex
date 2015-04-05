@@ -35,13 +35,31 @@ int findPivotColumn(table* instance) {
 	return cPivot;
 }
 
+float findRatio(table* instance, int row, int column, int resCol) {
+	return getTableField(instance, row, resCol) / getTableField(instance, row, column);
+}
+
 int findPivotRow(table* instance, int column) {
-	int resultsRow = instance->numColumns - 1;
-	int cPivot = 0;
-	float cPivotR;
-	for (unsigned int i = 0; i < instance->numRows; i++) {
-		if (getTableField(instance, cPivot, column))
+
+	if (instance->numRows < 2) {
+		printf("no pivot possible\n");
+		return -1;
 	}
+
+	int resultsColumn = instance->numColumns - 1;
+	
+	int cPivot = 1;
+	float cPivotR = findRatio(instance, 1, column, resultsColumn);
+	
+	//Row 0 is objective function
+	for (unsigned int i = 1; i < instance->numRows; i++) {
+		if (findRatio(instance, i, column, resultsColumn) < cPivotR) {
+			cPivot = i;
+			cPivotR = findRatio(instance, i, column, resultsColumn);
+		}
+	}
+
+	return cPivot;
 }
 
 void solveTable(table* instance) {
@@ -72,7 +90,11 @@ void solveTable(table* instance) {
 
 	int pivotC = findPivotColumn(instance);
 	int pivotR = findPivotRow(instance, pivotC);
-	printf("Pivot Column %i\n", pivot);
+	float ratio = findRatio(instance, pivotR, pivotC, instance->numColumns-1);
+	
+	printf("Pivot Column %i\n", pivotC);
+	printf("Pivot Row: %i\n", pivotR);
+	printf("Pivot Ratio: %f\n", ratio);
 
 	free(rowBasicData);
 }
