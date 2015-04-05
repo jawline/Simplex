@@ -84,8 +84,6 @@ void makeOtherRowsUnit(table* instance, int baseRow, int col) {
 	for (unsigned int i = 0; i < instance->numRows; i++) {
 		if (i != baseRow && getTableField(instance, i, col) != 0) {
 			float ratioOfBaseRow = 1/getTableField(instance, i, col);
-			printf("Row %i needs to be made unit\n", i);
-			printf("Ratio (%f)\n", ratioOfBaseRow);
 			subtractRow(instance, i, baseRow, ratioOfBaseRow);
 		}
 	}
