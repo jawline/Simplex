@@ -70,6 +70,23 @@ void makeRowUnit(table* instance, int row, int col) {
 	}
 }
 
+void subtractRow(table* instance, int rowToSub, int rowFrom, float ratio) {
+	for (unsigned int i = 0; i < instance->numColumns; i++) {
+		setTableField(instance, rowToSub, i, getTableField(instance, rowToSub, i) - (getTableField(instance, rowFrom, i) * ratio));
+	}
+}
+
+void makeOtherRowsUnit(table* instance, int baseRow, int col) {
+	for (unsigned int i = 0; i < instance->numRows; i++) {
+		if (i != baseRow && getTableField(instance, i, col) != 0) {
+			float ratioOfBaseRow = 1/getTableField(instance, i, col);
+			printf("Row %i needs to be made unit\n", i);
+			printf("Ratio (%f)\n", ratioOfBaseRow);
+			subtractRow(instance, i, baseRow, ratioOfBaseRow);
+		}
+	}
+}
+
 void solveTable(table* instance) {
 	//NOTE: It is assumed that the last column in the table is the results column
 	
@@ -107,6 +124,7 @@ void solveTable(table* instance) {
 	printTable(instance);
 	printf("Make unit\n");
 	makeRowUnit(instance, pivotR, pivotC);
+	makeOtherRowsUnit(instance, pivotR, pivotC);
 	printTable(instance);
 
 	free(rowBasicData);
