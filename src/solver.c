@@ -90,10 +90,11 @@ void makeOtherRowsUnit(table* instance, int baseRow, int col) {
 }
 
 void solveTable(table* instance, simplex_result* results) {
-	/*
+	
 	//Find the initial basic variables (Only occur in one col)
 	int* rowBasicData = malloc(sizeof(int) * instance->numRows);
 	float* rowBasicSolution = malloc(sizeof(float) * instance->numRows);
+	memset(rowBasicData, 0, sizeof(int) * instance->numRows);
 	
 	printf("---------\n");
 
@@ -115,7 +116,6 @@ void solveTable(table* instance, simplex_result* results) {
 	}
 	
 	printf("---------\n");
-	*/
 
 	int pivotC;
 	while ((pivotC = findPivotColumn(instance)) != -1) {
@@ -127,7 +127,15 @@ void solveTable(table* instance, simplex_result* results) {
 		makeRowUnit(instance, pivotR, pivotC);
 		makeOtherRowsUnit(instance, pivotR, pivotC);
 		printTable(instance);
+		rowBasicData[pivotR] = pivotC;
 	}
+
+
+	printf("---------\n");
+	for (unsigned int i = 0; i < instance->numRows; i++) {
+		printf("%i maps %i\n", i, rowBasicData[i]);
+	}
+	printf("---------\n");
 
 	//free(rowBasicData);
 	results->value = getTableField(instance, 0, instance->numColumns - 1);
