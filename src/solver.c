@@ -90,12 +90,13 @@ void makeOtherRowsUnit(table* instance, int baseRow, int col) {
 }
 
 void solveTable(table* instance, simplex_result* results) {
-	
+	/*
 	//Find the initial basic variables (Only occur in one col)
 	int* rowBasicData = malloc(sizeof(int) * instance->numRows);
 	float* rowBasicSolution = malloc(sizeof(float) * instance->numRows);
 	
 	printf("---------\n");
+
 	//First row is the objective function, should have no basic variables
 	for (unsigned int i = 1; i < instance->numRows; i++) {
 		rowBasicData[i] = findBasic(instance, i);
@@ -112,7 +113,9 @@ void solveTable(table* instance, simplex_result* results) {
 				rowBasicSolution[i]);
 		}
 	}
+	
 	printf("---------\n");
+	*/
 
 	int pivotC;
 	while ((pivotC = findPivotColumn(instance)) != -1) {
@@ -126,6 +129,6 @@ void solveTable(table* instance, simplex_result* results) {
 		printTable(instance);
 	}
 
-	free(rowBasicData);
+	//free(rowBasicData);
 	results->value = getTableField(instance, 0, instance->numColumns - 1);
 }
