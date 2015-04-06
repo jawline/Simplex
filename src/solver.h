@@ -7,7 +7,7 @@
  * Structure to hold results of simplex solver run
  */
 typedef struct {
-  float value;
+  double value;
 } simplex_result;
 
 bool isBasic(table* instance, int col);

@@ -76,11 +76,11 @@ int addTableColumn(table* instance, char const* name, size_t nameLength) {
 void addTableRow(table* instance) {
 	
 	//Allocate memory and copy over existing rows
-	float* newRowData = malloc(sizeof(float) * (instance->numRows + 1) * instance->numColumns);
-	memcpy(newRowData, instance->rowData, sizeof(float) * instance->numRows * instance->numColumns);
+	double* newRowData = malloc(sizeof(double) * (instance->numRows + 1) * instance->numColumns);
+	memcpy(newRowData, instance->rowData, sizeof(double) * instance->numRows * instance->numColumns);
 	
 	//Set new rows to 0
-	memset(newRowData + (instance->numRows * instance->numColumns), 0, sizeof(float) * instance->numColumns);
+	memset(newRowData + (instance->numRows * instance->numColumns), 0, sizeof(double) * instance->numColumns);
 
 	//Free old data and set new row data
 	if (instance->rowData) {
@@ -93,9 +93,9 @@ void addTableRow(table* instance) {
 void expandRows(table* instance, int oldNumColumns, int newNumColumns) {
 	
 	//Allocate new data
-	float* newRowData = malloc(sizeof(float) * instance->numRows * newNumColumns);
-	float* oldRowData = instance->rowData;
-	memset(newRowData, 0, newNumColumns * instance->numRows * sizeof(float));
+	double* newRowData = malloc(sizeof(double) * instance->numRows * newNumColumns);
+	double* oldRowData = instance->rowData;
+	memset(newRowData, 0, newNumColumns * instance->numRows * sizeof(double));
 	
 	//Copy the existing rows
 	for (unsigned int column = 0; column < oldNumColumns; column++) {
@@ -118,19 +118,19 @@ unsigned int getCurrentRow(table* instance) {
 	return instance->numRows - 1;
 }
 
-float* getRowData(table* instance, unsigned int rowNum) {
+double* getRowData(table* instance, unsigned int rowNum) {
 	return instance->rowData + (instance->numColumns * rowNum);
 }
 
-float getTableField(table* instance, unsigned int row, unsigned int column) {
+double getTableField(table* instance, unsigned int row, unsigned int column) {
 	return *(getRowData(instance, row) + column);
 }
 
-void setTableField(table* instance, unsigned int row, unsigned int column, float val) {
+void setTableField(table* instance, unsigned int row, unsigned int column, double val) {
 	*(getRowData(instance, row) + column) = val;
 }
 
-float getTableFieldWithColumnNameAndLength(table* instance, unsigned int row, char const* columnName, int length) {
+double getTableFieldWithColumnNameAndLength(table* instance, unsigned int row, char const* columnName, int length) {
 	int col;
 	if ((col = getTableColumnIdWithLength(instance, columnName, length)) == -1) {
 		printf("Column %s does not exist\n", columnName);
@@ -139,7 +139,7 @@ float getTableFieldWithColumnNameAndLength(table* instance, unsigned int row, ch
 	return getTableField(instance, row, col);	
 }
 
-void setTableFieldWithColumnNameAndLength(table* instance, unsigned int row, char const* columnName, int length, float val) {
+void setTableFieldWithColumnNameAndLength(table* instance, unsigned int row, char const* columnName, int length, double val) {
 	int col;
 	if ((col = getTableColumnIdWithLength(instance, columnName, length)) == -1) {
 		printf("Column %s does not exist\n", columnName);
@@ -148,16 +148,16 @@ void setTableFieldWithColumnNameAndLength(table* instance, unsigned int row, cha
 	setTableField(instance, row, col, val);
 }
 
-float getTableFieldWithColumnName(table* instance, unsigned int row, char const* columnName) {
+double getTableFieldWithColumnName(table* instance, unsigned int row, char const* columnName) {
 	return getTableFieldWithColumnNameAndLength(instance, row, columnName, strlen(columnName));
 }
 
-void setTableFieldWithColumnName(table* instance, unsigned int row, char const* columnName, float val) {
+void setTableFieldWithColumnName(table* instance, unsigned int row, char const* columnName, double val) {
 	setTableFieldWithColumnNameAndLength(instance, row, columnName, strlen(columnName), val);
 }
 
 void swapTableColumn(table* instance, unsigned int a, unsigned int b) {
-	float temp;
+	double temp;
 	for (unsigned int i = 0; i < instance->numRows; i++) {
 		temp = getTableField(instance, i, a);
 		setTableField(instance, i, a, getTableField(instance, i, b));

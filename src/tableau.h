@@ -4,7 +4,7 @@
 
 typedef struct {
   column* columns;
-  float* rowData;
+  double* rowData;
   int numColumns;
   int numRows;
 } table;
@@ -53,29 +53,29 @@ unsigned int getCurrentRow(table* instance);
 /**
  * Return a pointer to the row data for the specified row number
  */
-float* getRowData(table* instance, unsigned int rowNum);
+double* getRowData(table* instance, unsigned int rowNum);
 
 /**
  * Get the table data at a given field
  */
-float getTableField(table* instance, unsigned int row, unsigned int column);
+double getTableField(table* instance, unsigned int row, unsigned int column);
 
 /**
  * Set the table data at a given field
  */
-void setTableField(table* instance, unsigned int row, unsigned int column, float val);
+void setTableField(table* instance, unsigned int row, unsigned int column, double val);
 
 /**
  * Get a table field from a column name and row number
  */
-float getTableFieldWithColumnName(table* instance, unsigned int row, char const* columnName);
-float getTableFieldWithColumnNameAndLength(table* instance, unsigned int row, char const* columnName, int length);
+double getTableFieldWithColumnName(table* instance, unsigned int row, char const* columnName);
+double getTableFieldWithColumnNameAndLength(table* instance, unsigned int row, char const* columnName, int length);
 
 /**
  * Set a table field from a column name and row number
  */
-void setTableFieldWithColumnName(table* instance, unsigned int row, char const* columnName, float val);
-void setTableFieldWithColumnNameAndLength(table* instance, unsigned int row, char const* columnName, int length, float val);
+void setTableFieldWithColumnName(table* instance, unsigned int row, char const* columnName, double val);
+void setTableFieldWithColumnNameAndLength(table* instance, unsigned int row, char const* columnName, int length, double val);
 
 void swapTableColumn(table* instance, unsigned int a, unsigned int b);
 

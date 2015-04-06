@@ -40,7 +40,7 @@ int findPivotColumn(table* instance) {
 	return getTableField(instance, 0, cPivot) < 0 ? cPivot : -1;
 }
 
-float findRatio(table* instance, int row, int column, int resCol) {
+double findRatio(table* instance, int row, int column, int resCol) {
 	return getTableField(instance, row, resCol) / getTableField(instance, row, column);
 }
 
@@ -54,7 +54,7 @@ int findPivotRow(table* instance, int column) {
 	int resultsColumn = instance->numColumns - 1;
 	
 	int cPivot = 1;
-	float cPivotR = findRatio(instance, 1, column, resultsColumn);
+	double cPivotR = findRatio(instance, 1, column, resultsColumn);
 	
 	//Find the row to be used as the pivot, excluding the objective function
 	for (unsigned int i = 1; i < instance->numRows; i++) {
@@ -68,13 +68,13 @@ int findPivotRow(table* instance, int column) {
 }
 
 void makeRowUnit(table* instance, int row, int col) {
-	float ratio = 1/getTableField(instance, row, col);
+	double ratio = 1/getTableField(instance, row, col);
 	for (unsigned int i = 0; i < instance->numColumns; i++) {
 		setTableField(instance, row, i, ratio * getTableField(instance, row, i));
 	}
 }
 
-void subtractRow(table* instance, int rowToSub, int rowFrom, float ratio) {
+void subtractRow(table* instance, int rowToSub, int rowFrom, double ratio) {
 	for (unsigned int i = 0; i < instance->numColumns; i++) {
 		setTableField(instance, rowToSub, i, getTableField(instance, rowToSub, i) - (getTableField(instance, rowFrom, i) / ratio));
 	}
@@ -83,7 +83,7 @@ void subtractRow(table* instance, int rowToSub, int rowFrom, float ratio) {
 void makeOtherRowsUnit(table* instance, int baseRow, int col) {
 	for (unsigned int i = 0; i < instance->numRows; i++) {
 		if (i != baseRow && getTableField(instance, i, col) != 0) {
-			float ratioOfBaseRow = 1/getTableField(instance, i, col);
+			double ratioOfBaseRow = 1/getTableField(instance, i, col);
 			subtractRow(instance, i, baseRow, ratioOfBaseRow);
 		}
 	}
@@ -93,7 +93,7 @@ void solveTable(table* instance, simplex_result* results) {
 	
 	//Find the initial basic variables (Only occur in one col)
 	int* rowBasicData = malloc(sizeof(int) * instance->numRows);
-	float* rowBasicSolution = malloc(sizeof(float) * instance->numRows);
+	double* rowBasicSolution = malloc(sizeof(double) * instance->numRows);
 	memset(rowBasicData, 0, sizeof(int) * instance->numRows);
 	
 	printf("---------\n");
@@ -120,7 +120,7 @@ void solveTable(table* instance, simplex_result* results) {
 	int pivotC;
 	while ((pivotC = findPivotColumn(instance)) != -1) {
 		int pivotR = findPivotRow(instance, pivotC);
-		float ratio = findRatio(instance, pivotR, pivotC, instance->numColumns-1);
+		double ratio = findRatio(instance, pivotR, pivotC, instance->numColumns-1);
 		printf("Pivot Column %i\n", pivotC);
 		printf("Pivot Row: %i\n", pivotR);
 		printf("Pivot Ratio: %f\n", ratio);

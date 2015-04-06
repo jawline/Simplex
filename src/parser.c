@@ -86,8 +86,8 @@ char const* parseExpression(table* instance, char const* input, bool negate) {
     addTableColumn(instance, tokenStart, tokenSize);
     setTableFieldWithColumnNameAndLength(instance, getCurrentRow(instance), tokenStart, tokenSize, negate ? -1 : 1);
   } else if (token == NUM) {
-    float parsedValueAsNumber;
-    if (!sscanf(tokenStart, "%f", &parsedValueAsNumber)) {
+    double parsedValueAsNumber;
+    if (!sscanf(tokenStart, "%lf", &parsedValueAsNumber)) {
       printf("Unable to parse number from NUM token\n");
       return 0;
     }
@@ -151,8 +151,8 @@ char const* parseConstraint(table* instance, char const* input) {
   }
 
 
-  float parsedValueAsNumber;
-  if (!sscanf(tokenStart, "%f", &parsedValueAsNumber)) {
+  double parsedValueAsNumber;
+  if (!sscanf(tokenStart, "%lf", &parsedValueAsNumber)) {
     printf("SSCANF FAIL\n");
     return 0;
   }
