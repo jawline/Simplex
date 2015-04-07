@@ -133,7 +133,13 @@ void solveTable(table* instance, simplex_result* results) {
 
 	printf("---------\n");
 	for (unsigned int i = 0; i < instance->numRows; i++) {
-		printf("%i maps %i\n", i, rowBasicData[i]);
+		if (rowBasicData[i] != -1) {
+			printf("%s: %f\n",
+				instance->columns[i].name, 
+				getTableField(instance, i, instance->numColumns - 1));
+		} else {
+			printf("Row %i unmapped\n", i);
+		}
 	}
 	printf("---------\n");
 
