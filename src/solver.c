@@ -137,6 +137,6 @@ void solveTable(table* instance, simplex_result* results) {
 	}
 	printf("---------\n");
 
-	//free(rowBasicData);
+	free(rowBasicData);
 	results->value = getTableField(instance, 0, instance->numColumns - 1);
 }
