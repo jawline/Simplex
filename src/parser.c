@@ -76,6 +76,7 @@ char const* parseExpression(table* instance, char const* input, bool negate) {
   size_t tokenSize;
   char const* tempInput;
   char const* tokenStart;
+
   input = nextToken(&token, input, &tokenStart, &tokenSize);
 
   if (!input) {
@@ -120,6 +121,7 @@ char const* parseConstraint(table* instance, char const* input) {
   addTableRow(instance);
   
   input = parseExpression(instance, input, false);
+  
   if (!input) {
     return 0;
   }
@@ -194,6 +196,7 @@ bool parseString(table* instance, char const* input) {
   addTableColumn(instance, "result", 6);
   
   input = nextToken(&token, input, &tokenStart, &tokenSize);
+  
   if (!input) {
     return false;
   }
@@ -204,6 +207,7 @@ bool parseString(table* instance, char const* input) {
   }
   
   input = nextToken(&token, input, &tokenStart, &tokenSize);
+  
   if (!input) {
     return false;
   }
@@ -217,6 +221,7 @@ bool parseString(table* instance, char const* input) {
   setTableFieldWithColumnNameAndLength(instance, getCurrentRow(instance), tokenStart, tokenSize, 1);
   
   input = nextToken(&token, input, &tokenStart, &tokenSize);
+  
   if (!input) {
     return false;
   }
@@ -233,6 +238,7 @@ bool parseString(table* instance, char const* input) {
   }
   
   input = nextToken(&token, input, &tokenStart, &tokenSize);
+  
   if (!input) {
     return false;
   }
@@ -252,6 +258,7 @@ bool parseString(table* instance, char const* input) {
 
   
   input = nextToken(&token, input, &tokenStart, &tokenSize);
+  
   if (!input) {
     return false;
   }
