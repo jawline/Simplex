@@ -148,7 +148,6 @@ char const* parseConstraint(table* instance, char const* input) {
     return 0;
   }
 
-
   double parsedValueAsNumber;
   if (!sscanf(tokenStart, "%lf", &parsedValueAsNumber)) {
     printf("SSCANF FAIL\n");
@@ -179,12 +178,10 @@ char const* parseConstraints(table* instance, char const* input) {
 }
 
 bool postParseStep(table* instance) {
-  
   //Make results the last column (For formatting)
   for (unsigned int i = getTableColumnId(instance, "result"); i < instance->numColumns-1; i++) {
     swapTableColumn(instance, i, i+1);
   }
-
   return true;
 }
 
@@ -255,7 +252,6 @@ bool parseString(table* instance, char const* input) {
   if (!input) {
     return false;
   }
-
   
   input = nextToken(&token, input, &tokenStart, &tokenSize);
   
