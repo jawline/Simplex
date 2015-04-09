@@ -68,7 +68,7 @@ int findPivotRow(table* instance, int column) {
 }
 
 void makeRowUnit(table* instance, int row, int col) {
-	double ratio = 1/getTableField(instance, row, col);
+	double ratio = 1.0 / getTableField(instance, row, col);
 	for (unsigned int i = 0; i < instance->numColumns; i++) {
 		setTableField(instance, row, i, ratio * getTableField(instance, row, i));
 	}
