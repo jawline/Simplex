@@ -76,6 +76,7 @@ char const* parseExpression(table* instance, char const* input, bool objective, 
   size_t tokenSize;
   char const* tempInput;
   char const* tokenStart;
+
   input = nextToken(&token, input, &tokenStart, &tokenSize);
 
   if (!input) {
@@ -131,6 +132,7 @@ char const* parseConstraint(table* instance, char const* input) {
   addTableRow(instance);
   
   input = parseExpression(instance, input, false, 1);
+
   if (!input) {
     return 0;
   }
@@ -156,7 +158,6 @@ char const* parseConstraint(table* instance, char const* input) {
     printf("Expected NUM near %s\n", input);
     return 0;
   }
-
 
   double parsedValueAsNumber;
   if (!sscanf(tokenStart, "%lf", &parsedValueAsNumber)) {
@@ -188,12 +189,10 @@ char const* parseConstraints(table* instance, char const* input) {
 }
 
 bool postParseStep(table* instance) {
-  
   //Make results the last column (For formatting)
   for (unsigned int i = getTableColumnId(instance, "result"); i < instance->numColumns-1; i++) {
     swapTableColumn(instance, i, i+1);
   }
-
   return true;
 }
 
@@ -205,6 +204,7 @@ bool parseString(table* instance, char const* input) {
   addTableColumn(instance, "result", 6);
   
   input = nextToken(&token, input, &tokenStart, &tokenSize);
+  
   if (!input) {
     return false;
   }
@@ -215,6 +215,7 @@ bool parseString(table* instance, char const* input) {
   }
   
   input = nextToken(&token, input, &tokenStart, &tokenSize);
+  
   if (!input) {
     return false;
   }
@@ -228,6 +229,7 @@ bool parseString(table* instance, char const* input) {
   setTableFieldWithColumnNameAndLength(instance, getCurrentRow(instance), tokenStart, tokenSize, 1);
   
   input = nextToken(&token, input, &tokenStart, &tokenSize);
+  
   if (!input) {
     return false;
   }
@@ -244,6 +246,7 @@ bool parseString(table* instance, char const* input) {
   }
   
   input = nextToken(&token, input, &tokenStart, &tokenSize);
+  
   if (!input) {
     return false;
   }
@@ -260,9 +263,9 @@ bool parseString(table* instance, char const* input) {
   if (!input) {
     return false;
   }
-
   
   input = nextToken(&token, input, &tokenStart, &tokenSize);
+  
   if (!input) {
     return false;
   }

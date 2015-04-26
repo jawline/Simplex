@@ -1,3 +1,5 @@
+# Simplex
+
 Attempt to build a basic Simplex solver
 
 To build a copy of Blake Loring's Regex-Parser must be installed (make && sudo make install) on your machine.

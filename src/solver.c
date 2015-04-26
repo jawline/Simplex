@@ -68,7 +68,7 @@ int findPivotRow(table* instance, int column) {
 }
 
 void makeRowUnit(table* instance, int row, int col) {
-	double ratio = 1/getTableField(instance, row, col);
+	double ratio = 1.0 / getTableField(instance, row, col);
 	for (unsigned int i = 0; i < instance->numColumns; i++) {
 		setTableField(instance, row, i, ratio * getTableField(instance, row, i));
 	}
@@ -133,10 +133,16 @@ void solveTable(table* instance, simplex_result* results) {
 
 	printf("---------\n");
 	for (unsigned int i = 0; i < instance->numRows; i++) {
-		printf("%i maps %i\n", i, rowBasicData[i]);
+		if (rowBasicData[i] != -1) {
+			printf("%s: %f\n",
+				instance->columns[i].name, 
+				getTableField(instance, i, instance->numColumns - 1));
+		} else {
+			printf("Row %i unmapped\n", i);
+		}
 	}
 	printf("---------\n");
 
-	//free(rowBasicData);
+	free(rowBasicData);
 	results->value = getTableField(instance, 0, instance->numColumns - 1);
 }
