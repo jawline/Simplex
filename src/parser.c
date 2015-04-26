@@ -100,10 +100,12 @@ char const* parseExpression(table* instance, char const* input, bool objective, 
     setTableFieldWithColumnNameAndLength(instance, getCurrentRow(instance), tokenStart, tokenSize, scalar);
   } else if (token == NUM) {
     double parsedValueAsNumber;
+    
     if (!sscanf(tokenStart, "%lf", &parsedValueAsNumber)) {
       printf("Unable to parse number from NUM token\n");
       return 0;
     }
+
     if ((tempInput = nextToken(&token, input, &tokenStart, &tokenSize)) && token == ID) {
       addTableColumn(instance, tokenStart, tokenSize);
       setTableFieldWithColumnNameAndLength(instance, getCurrentRow(instance), tokenStart, tokenSize, parsedValueAsNumber * scalar);
@@ -189,10 +191,12 @@ char const* parseConstraints(table* instance, char const* input) {
 }
 
 bool postParseStep(table* instance) {
+  
   //Make results the last column (For formatting)
   for (unsigned int i = getTableColumnId(instance, "result"); i < instance->numColumns-1; i++) {
     swapTableColumn(instance, i, i+1);
   }
+
   return true;
 }
 

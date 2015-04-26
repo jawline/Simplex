@@ -27,17 +27,19 @@ int findBasic(table* instance, int row) {
  * Return the ID of the pivot column or -1 if there is not pivot column
  */
 int findPivotColumn(table* instance) {
-	int cPivot = 0;
+	int cPivot = 1;
+	double cPivotValue = getTableField(instance, 0, 1);
 
 	//Slight optimization, as the first row will never change and will never be the pivot it can be excluded
 	for (unsigned int i = 1; i < instance->numColumns - 1; i++) {
-		if (getTableField(instance, 0, i) < getTableField(instance, 0, cPivot)) {
+		if (getTableField(instance, 0, i) != 0 && (getTableField(instance, 0, i) < cPivotValue || cPivotValue == 0)) {
 			cPivot = i;
+			cPivotValue = getTableField(instance, 0, i);
 		}
 	}
 
 	//If the columns objective value is >= 0 then it cannot be a pivot column
-	return getTableField(instance, 0, cPivot) < 0 ? cPivot : -1;
+	return getTableField(instance, 0, cPivot) != 0 ? cPivot : -1;
 }
 
 double findRatio(table* instance, int row, int column, int resCol) {
@@ -118,7 +120,8 @@ void solveTable(table* instance, simplex_result* results) {
 	printf("---------\n");
 
 	int pivotC;
-	while ((pivotC = findPivotColumn(instance)) != -1) {
+	int i = 0;
+	while ((pivotC = findPivotColumn(instance)) != -1 && i < 4) {
 		int pivotR = findPivotRow(instance, pivotC);
 		double ratio = findRatio(instance, pivotR, pivotC, instance->numColumns-1);
 		printf("Pivot Column %i\n", pivotC);
@@ -128,6 +131,7 @@ void solveTable(table* instance, simplex_result* results) {
 		makeOtherRowsUnit(instance, pivotR, pivotC);
 		printTable(instance);
 		rowBasicData[pivotR] = pivotC;
+		i++;
 	}
 
 
