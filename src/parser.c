@@ -71,7 +71,7 @@ void parserInit() {
   regexParse(&numRegex, "[0-9]+(.[0-9]+)?");
 }
 
-char const* parseExpression(table* instance, char const* input, bool negate) {
+char const* parseExpression(table* instance, char const* input, bool objective, int scale) {
   TOKEN token;
   size_t tokenSize;
   char const* tempInput;
@@ -81,10 +81,22 @@ char const* parseExpression(table* instance, char const* input, bool negate) {
   if (!input) {
     return 0;
   }
+
+  if (token == MINUS) {
+    input = nextToken(&token, input, &tokenStart, &tokenSize);
+    scale *= -1;
+  }
+
+  if (!input) {
+    return 0;
+  }
+
+  int scalar = objective ? -1 : 1;
+  scalar *= scale;
   
   if (token == ID) {
     addTableColumn(instance, tokenStart, tokenSize);
-    setTableFieldWithColumnNameAndLength(instance, getCurrentRow(instance), tokenStart, tokenSize, negate ? -1 : 1);
+    setTableFieldWithColumnNameAndLength(instance, getCurrentRow(instance), tokenStart, tokenSize, scalar);
   } else if (token == NUM) {
     double parsedValueAsNumber;
     if (!sscanf(tokenStart, "%lf", &parsedValueAsNumber)) {
@@ -93,7 +105,7 @@ char const* parseExpression(table* instance, char const* input, bool negate) {
     }
     if ((tempInput = nextToken(&token, input, &tokenStart, &tokenSize)) && token == ID) {
       addTableColumn(instance, tokenStart, tokenSize);
-      setTableFieldWithColumnNameAndLength(instance, getCurrentRow(instance), tokenStart, tokenSize, negate ? -parsedValueAsNumber : parsedValueAsNumber);
+      setTableFieldWithColumnNameAndLength(instance, getCurrentRow(instance), tokenStart, tokenSize, parsedValueAsNumber * scalar);
       input = tempInput;
     } else {
       printf("Expected ID or NUM ID near \"%s\"", input);
@@ -105,12 +117,7 @@ char const* parseExpression(table* instance, char const* input, bool negate) {
   }
   
   if ((tempInput = nextToken(&token, input, &tokenStart, &tokenSize)) && (token == PLUS || token == MINUS)) {
-    
-    if (token == MINUS) {
-      negate = !negate;
-    }
-
-    return parseExpression(instance, tempInput, negate);
+    return parseExpression(instance, tempInput, objective, token == MINUS ? -1 : 1);
   } else {
     return input;
   }
@@ -123,7 +130,7 @@ char const* parseConstraint(table* instance, char const* input) {
 
   addTableRow(instance);
   
-  input = parseExpression(instance, input, false);
+  input = parseExpression(instance, input, false, 1);
   if (!input) {
     return 0;
   }
@@ -230,7 +237,7 @@ bool parseString(table* instance, char const* input) {
     return false;
   }
   
-  input = parseExpression(instance, input, true);
+  input = parseExpression(instance, input, true, 1);
   
   if (!input) {
     return false;

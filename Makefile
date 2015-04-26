@@ -11,7 +11,7 @@ INSTALL_EXE_PATH = /usr/bin/
 INSTALL_LIB_PATH = /usr/lib/
 
 #Compiler settings
-CC=gcc
+CC=clang
 CFLAGS=-c -Wall -ggdb -std=c11
 LDFLAGS=-ggdb -lregexpm
 
