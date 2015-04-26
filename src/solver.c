@@ -27,10 +27,17 @@ int findBasic(table* instance, int row) {
  * Return the ID of the pivot column or -1 if there is not pivot column
  */
 int findPivotColumn(table* instance) {
+
+	//Check there are at least two columns
+	if (instance->numColumns < 2) {
+		return -1;
+	}
+
+	//Don't grab the first column, it shouldn't changed
 	int cPivot = 1;
 	double cPivotValue = getTableField(instance, 0, 1);
 
-	//Slight optimization, as the first row will never change and will never be the pivot it can be excluded
+	//Never look at the first column, it shouldn't change
 	for (unsigned int i = 1; i < instance->numColumns - 1; i++) {
 		if (getTableField(instance, 0, i) != 0 && (getTableField(instance, 0, i) < cPivotValue || cPivotValue == 0)) {
 			cPivot = i;
