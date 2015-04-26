@@ -28,8 +28,8 @@ int findBasic(table* instance, int row) {
  */
 int findPivotColumn(table* instance) {
 
-	//Check there are at least two columns
-	if (instance->numColumns < 2) {
+	//Check there are at least three columns (At least one variable, the objective variable, and the results columns)
+	if (instance->numColumns < 3) {
 		return -1;
 	}
 
