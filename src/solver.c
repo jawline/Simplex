@@ -77,7 +77,9 @@ int findPivotRow(table* instance, int column) {
 }
 
 void makeRowUnit(table* instance, int row, int col) {
+	
 	double ratio = 1.0 / getTableField(instance, row, col);
+
 	for (unsigned int i = 0; i < instance->numColumns; i++) {
 		setTableField(instance, row, i, ratio * getTableField(instance, row, i));
 	}
@@ -128,10 +130,11 @@ void solveTable(table* instance, simplex_result* results) {
 
 	int pivotC;
 	int i = 0;
-	while ((pivotC = findPivotColumn(instance)) != -1 && i < 4) {
+	while ((pivotC = findPivotColumn(instance)) != -1) {
 		int pivotR = findPivotRow(instance, pivotC);
 		double ratio = findRatio(instance, pivotR, pivotC, instance->numColumns-1);
-		printf("Pivot Column %i\n", pivotC);
+		printf("Operation Number: %i\n", i);
+		printf("Pivot Column: %i\n", pivotC);
 		printf("Pivot Row: %i\n", pivotR);
 		printf("Pivot Ratio: %f\n", ratio);
 		makeRowUnit(instance, pivotR, pivotC);
