@@ -1,3 +1,5 @@
+#This project has been replaced (and massively improved on) by CoreConstraint inside my CoreVM repo. Use/reference that instead.
+
 # Simplex
 
 Attempt to build a basic Simplex solver
@@ -12,3 +14,4 @@ Example inputs
 ./bin/simplex "max q = 5x"
 ./bin/simplex "max q = 5x s.t. x = 5"
 ./bin/simplex "max q = x + y s.t. x = 5, y = 25"
+
