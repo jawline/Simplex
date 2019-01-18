@@ -1,5 +1,3 @@
-#This project has been replaced (and massively improved on) by CoreConstraint inside my CoreVM repo. Use/reference that instead.
-
 # Simplex
 
 Attempt to build a basic Simplex solver
